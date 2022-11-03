@@ -24,10 +24,14 @@ class Product(models.Model):
     category = models.ForeignKey('Categories', on_delete=models.CASCADE)
     subcategory = models.ForeignKey('Subcategories', on_delete=models.CASCADE)
     product_img = models.ImageField(upload_to='img/product')
-    price_per_kg = models.DecimalField(decimal_places=2, help_text="In BYN/kg")
-    on_stock = models.DecimalField(decimal_places=2, help_text='entered the stock, "kg.gr"')
+    price_per_kg = models.DecimalField(max_digits=5, decimal_places=2, help_text="In BYN/kg")
+    on_stock = models.DecimalField(max_digits=5, decimal_places=2, help_text='entered the stock, "kg.gr"')
     in_stock = models.BooleanField(help_text="in stock/ out of stock")
     description = models.TextField()
     nutritional_value = models.TextField()
-    min_pack = models.DecimalField(decimal_places=2, help_text='minimum packaging "kg.gr"')
+    min_pack = models.DecimalField(max_digits=5, decimal_places=2, help_text='minimum packaging "kg.gr"')
+    addition_date = models.DateTimeField(auto_now_add=True)
+    best_before = models.DateField()
 
+    def __str__(self):
+        return self.name
