@@ -1,0 +1,52 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="row">        
+        <div class="col-lg-4">
+            <p><img class="leftimg" src="{{ product.imageURL }}" width="100%" height="100%"></p>
+        </div>
+        <div class="col-lg-4" >
+            <h5>О продукте:</h5> <span>{{ product.description }}</span>
+            <br><br>
+            <h5>{{ product.nutritional_value }}</h5>
+            <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">В корзину</button>
+                <h4 style="display:inline-block;float: right">
+                {{product.price | floatformat:2}} Br </h4>
+        </div>
+                
+                    <!-- <div style="flex:1">
+                        <p class="quantity">{{item.quantity}}</p>
+                        <div class="quantity">
+                            <img data-product={{item.product.id}} data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
+                            
+                            <img data-product={{item.product.id}} data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
+                        </div>
+                    </div> -->
+        <div class="positioned">
+          <p>{{ product.body | linebreaks }}</p>
+            <h3>Оставьте комментарий:</h3>
+            <form action="/{{ product.pk }}/" method="post">
+              {% csrf_token %}
+                <div class="form-group">
+                  {{request.user}}
+                  <!-- {{ form.author }} -->
+                </div>
+                <div class="form-group">
+                  {{ form.body }}
+                </div>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
+            <br>
+            <h3>Коментарии:</h3>
+            {% for comment in comments %}
+            <p>
+              On {{ comment.created_on.date }}&nbsp;
+              <b>{{ comment.author }}</b> wrote:
+            </p>
+            <p>{{ comment.body }}</p>
+            <hr>
+            {% endfor %}
+          </div>
+
+{% endblock content %}  
